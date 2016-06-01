@@ -34,9 +34,9 @@ router.get('/:channel_name', function(req, res, next) {
 									description: description,
 									date: time
 								});	
-							});
+								res.send(feed.xml({indent: true}));
+							});							
 			  			}
-						res.send(feed.xml({indent: true}));
   					}
 				});
   			}
