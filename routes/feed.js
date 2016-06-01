@@ -25,7 +25,7 @@ router.get('/:channel_name', function(req, res, next) {
 							var user = response.messages[i].user;
 							var t = new Date(response.messages[i].ts * 1000);
 							feed.item({
-								title: user.title,
+								title: user,
 								description: response.messages[i].text,
 								date: t
 							});								  			
