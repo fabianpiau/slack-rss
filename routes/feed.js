@@ -18,7 +18,7 @@ router.get('/:channel_name', function(req, res, next) {
   					ttl: '30',
   				});
 
-  				slack.api('channels.history', {'channel':channel.id,'count':1}, function(err, response){
+  				slack.api('channels.history', {'channel':channel.id,'count':5}, function(err, response){
 			  		for(var i = 0; i < response.messages.length; i++) {
 			  			if(response.messages[i].subtype != "bot_message" 
 							&& response.messages[i].subtype != "channel_join") {
