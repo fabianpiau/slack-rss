@@ -25,17 +25,16 @@ router.get('/:channel_name', function(req, res, next) {
 							var description = response.messages[i].text;
 							var time = new Date(response.messages[i].ts * 1000);
 							
-							var user_email = 'undefined';
 							slack.api('users.info', {'user':user} ,function(err, response){
-								var user_name = response;
-								user_email = response.user;
-							});
-
-							feed.item({
-								title: user_name + ' - ' + user_email,
-								description: description,
-								date: time
-							});								
+								var user_name = response.user.profile.real_name;
+								var user_email = response.user.profile.email;
+								
+								feed.item({
+									title: user_name + ' - ' + user_email,
+									description: description,
+									date: time
+								});	
+							});							
 			  			}
   					}
 					res.send(feed.xml({indent: true}));
