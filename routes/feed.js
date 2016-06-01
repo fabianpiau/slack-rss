@@ -28,9 +28,9 @@ router.get('/:channel_name', function(req, res, next) {
 							var user_name = 'undefined';
 							var user_email = 'undefined';
 							slack.api('users.info', {'user':user} ,function(err, response){
-								var user_name = response.user.profile.real_name;
-								var user_email = response.user.profile.email;
-							});	
+								user_name = response.user.profile.real_name;
+								user_email = response.user.profile.email;
+							});
 
 							feed.item({
 								title: user_name + ' - ' + user_email,
