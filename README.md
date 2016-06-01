@@ -1,4 +1,4 @@
-# Slack to RSS - Fab
+# Slack to RSS
 Create an RSS feed from links in your Slack channels
 
 ### Keeping up with links in Slack is hard

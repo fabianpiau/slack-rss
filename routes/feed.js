@@ -14,8 +14,7 @@ router.get('/:channel_name', function(req, res, next) {
   			if(channel.name == req.params.channel_name) {
   				var feed = new rss({
   					title:"#" + channel.name,
-  					description:"The links that have been posted to the #"+channel.name +" on Slack",
-  					site_url: 'https://github.com/gozman/slack-rss',
+  					description:"The messages that have been posted to the #"+channel.name +" on Slack",
   					ttl: '30',
   				});
 
