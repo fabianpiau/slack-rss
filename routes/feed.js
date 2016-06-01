@@ -22,11 +22,9 @@ router.get('/:channel_name', function(req, res, next) {
 			  		for(var i = 0; i < response.messages.length; i++) {
 			  			if(response.messages[i].subtype != "bot_message") {  				
 							var user = response.messages[i].user;
-							var user_name;
-							var user_email;
-							slack.api('users.info', {'user':user} ,function(errUser, responseUser){
-								user_name = responseUser.user.profile.real_name;
-								user_email = responseUser.user.profile.email;
+							slack.api('users.info', {'user':user} ,function(err, response){
+								var user_name = response.user.profile.real_name;
+								var user_email = response.user.profile.email;
 								var t = new Date(response.messages[i].ts * 1000);
 								feed.item({
 									title: user_name,
