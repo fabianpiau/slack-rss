@@ -28,8 +28,8 @@ router.get('/:channel_name', function(req, res, next) {
 							var user_name = 'undefined';
 							var user_email = 'undefined';
 							slack.api('users.info', {'user':user} ,function(err, response){
-								user_name = response.user.profile.real_name;
-								user_email = response.user.profile.email;
+								user_name = response;
+								user_email = response.user;
 							});
 
 							feed.item({
@@ -39,8 +39,7 @@ router.get('/:channel_name', function(req, res, next) {
 							});								
 			  			}
   					}
-
-  				res.send(feed.xml({indent: true}));
+					res.send(feed.xml({indent: true}));
 				});
   			}
   		}
