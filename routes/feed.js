@@ -18,26 +18,23 @@ router.get('/:channel_name', function(req, res, next) {
   					ttl: '30',
   				});
 
-  				slack.api('channels.history', {'channel':channel.id,'count':5}, function(err, response){
+  				slack.api('channels.history', {'channel':channel.id,'count':1}, function(err, response){
 			  		for(var i = 0; i < response.messages.length; i++) {
-			  			if(response.messages[i].subtype != "bot_message" 
-							&& response.messages[i].subtype != "channel_join") {
-							var user = response.messages[i].user;
-							var description = response.messages[i].text;
-							var time = new Date(response.messages[i].ts * 1000);
+						var user = response.messages[i].user;
+						var description = response.messages[i].text;
+						var time = new Date(response.messages[i].ts * 1000);
+						
+						slack.api('users.info', {'user':user}, function(err, response){
+							var user_name = response.user.profile.real_name;
+							var user_email = response.user.profile.email;
 							
-							slack.api('users.info', {'user':user}, function(err, response){
-								var user_name = response.user.profile.real_name;
-								var user_email = response.user.profile.email;
-								
-								feed.item({
-									title: user_name + ' - ' + user_email,
-									description: description,
-									date: time
-								});	
-								res.send(feed.xml({indent: true}));
-							});							
-			  			}
+							feed.item({
+								title: user_name + ' - ' + user_email,
+								description: description,
+								date: time
+							});	
+							res.send(feed.xml({indent: true}));
+						});							
   					}
 				});
   			}
