@@ -21,21 +21,14 @@ router.get('/:channel_name', function(req, res, next) {
 
   				slack.api('channels.history', {'channel':channel.id,'count':process.env.HISTORY_LENGTH} ,function(err, response){
 			  		for(var i = 0; i < response.messages.length; i++) {
-			  			if(response.messages[i].attachments && response.messages[i].subtype != "bot_message") {  				
-				  			for(var j = 0; j < response.messages[i].attachments.length; j++) {
-				  				if(response.messages[i].attachments[j].title) {
-				  					var link = response.messages[i].attachments[j];
-
-				  					var t = new Date(response.messages[i].ts * 1000);
-
-				  					feed.item({
-				  						title: link.title,
-				  						description: link.text,
-				  						url: link.title_link,
-				  						date: t
-				  					});
-				  				}
-				  			}
+			  			if(response.messages[i].subtype != "bot_message") {  				
+							var user = response.messages[i].user;
+							var t = new Date(response.messages[i].ts * 1000);
+							feed.item({
+								title: user.title,
+								description: response.messages[i].text,
+								date: t
+							});								  			
 			  			}
   					}
 
