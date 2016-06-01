@@ -25,10 +25,9 @@ router.get('/:channel_name', function(req, res, next) {
 							var description = response.messages[i].text;
 							var time = new Date(response.messages[i].ts * 1000);
 							
-							var user_name = 'undefined';
 							var user_email = 'undefined';
 							slack.api('users.info', {'user':user} ,function(err, response){
-								user_name = response;
+								var user_name = response;
 								user_email = response.user;
 							});
 
