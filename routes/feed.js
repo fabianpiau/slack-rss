@@ -20,7 +20,8 @@ router.get('/:channel_name', function(req, res, next) {
 
   				slack.api('channels.history', {'channel':channel.id,'count':1}, function(err, response){
 			  		for(var i = 0; i < response.messages.length; i++) {
-			  			if(response.messages[i].subtype != "bot_message") {
+			  			if(response.messages[i].subtype != "bot_message" 
+							&& response.messages[i].subtype != "channel_join") {
 							var user = response.messages[i].user;
 							var description = response.messages[i].text;
 							var time = new Date(response.messages[i].ts * 1000);
