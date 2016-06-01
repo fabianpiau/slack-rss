@@ -18,14 +18,14 @@ router.get('/:channel_name', function(req, res, next) {
   					ttl: '30',
   				});
 
-  				slack.api('channels.history', {'channel':channel.id,'count':2} ,function(err, response){
+  				slack.api('channels.history', {'channel':channel.id,'count':2}, function(err, response){
 			  		for(var i = 0; i < response.messages.length; i++) {
-			  			if(response.messages[i].subtype != "bot_message") {  				
+			  			if(response.messages[i].subtype != "bot_message") {
 							var user = response.messages[i].user;
 							var description = response.messages[i].text;
 							var time = new Date(response.messages[i].ts * 1000);
 							
-							slack.api('users.info', {'user':user} ,function(err, response){
+							slack.api('users.info', {'user':user}, function(err, response){
 								var user_name = response.user.profile.real_name;
 								var user_email = response.user.profile.email;
 								
@@ -34,10 +34,10 @@ router.get('/:channel_name', function(req, res, next) {
 									description: description,
 									date: time
 								});	
+								res.send(feed.xml({indent: true}));
 							});							
 			  			}
   					}
-					res.send(feed.xml({indent: true}));
 				});
   			}
   		}
